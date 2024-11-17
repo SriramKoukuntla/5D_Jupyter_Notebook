@@ -1,15 +1,15 @@
 import WebSocket from "ws";
 import axios from "axios";
-
-const JUPYTER_URL = "http://127.0.0.1:8888";
-const TOKEN = "7a9f1acc7ee40ec044822595fa9eddb566ace21992335448";
+import { createClient } from "@supabase/supabase-js";
+import dotenv from "dotenv";
 
 let kernelId = null;
 let kerWS = null;
+let supabase = null;
 
 async function createKernel() {
 	const kernelResponse = await axios.post(
-		`${JUPYTER_URL}/api/kernels?token=${TOKEN}`,
+		`${process.env.JUPYTER_URL}/api/kernels?token=${process.env.TOKEN}`,
 		{ name: "python3" }
 	);
 	kernelId = kernelResponse.data.id;
@@ -17,10 +17,10 @@ async function createKernel() {
 }
 
 async function createKernelWS() {
-	const wsUrl = `${JUPYTER_URL.replace(
+	const wsUrl = `${process.env.JUPYTER_URL.replace(
 		"http",
 		"ws"
-	)}/api/kernels/${kernelId}/channels?token=${TOKEN}`;
+	)}/api/kernels/${kernelId}/channels?token=${process.env.TOKEN}`;
 	kerWS = new WebSocket(wsUrl);
 
 	return new Promise((resolve, reject) => {
@@ -42,9 +42,28 @@ async function createKernelWS() {
 	});
 }
 
-export async function createKernelAndWS() {
+async function startDatabase() {
+	try {
+		const supabaseUrl = process.env.SUPABASE_URL;
+		const supabaseKey = process.env.SUPABASE_KEY;
+		supabase = createClient(supabaseUrl, supabaseKey);
+		if (supabase) {
+			console.log("Connected to supabase!");
+		}
+	} catch (error) {
+		console.error(error);
+	}
+}
+
+async function createKernelAndWS() {
 	await createKernel();
 	await createKernelWS();
+}
+
+export async function startServer() {
+	dotenv.config();
+	await createKernelAndWS();
+	await startDatabase();
 }
 
 export function getKernelId() {
@@ -53,4 +72,8 @@ export function getKernelId() {
 
 export function getKernelWS() {
 	return kerWS;
+}
+
+export function getDatabaseConnection() {
+	return supabase;
 }

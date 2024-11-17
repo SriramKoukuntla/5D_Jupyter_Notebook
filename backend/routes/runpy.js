@@ -3,6 +3,10 @@ import express from "express";
 
 const router = express.Router();
 
+/**
+ * request: pass in code to be executed as "code" in request body
+ * returns json object with one field called "output", containing the string outputted by the program.
+ */
 router.post("/", async (req, res) => {
 	try {
 		const code = req.body.code;
