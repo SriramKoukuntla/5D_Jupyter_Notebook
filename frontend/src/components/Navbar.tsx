@@ -7,7 +7,7 @@ const DashNavbar: React.FC<any> = () => {
 		<Navbar className="custom-navbar">
 			<div className="navbar-container d-flex">
 				<Nav className="align-items-center">
-					<Navbar.Brand style={{ paddingLeft: "20px" }}>
+					<Navbar.Brand style={{ paddingLeft: "20px", fontSize: 30 }}>
 						notevis
 					</Navbar.Brand>
 				</Nav>
