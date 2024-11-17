@@ -1,5 +1,5 @@
 import "./App.css";
-import DashNavbar from "./components/Navbar";
+import DataActivity from "./DataActivity";
 
 function App() {
 	return (
@@ -12,7 +12,7 @@ function App() {
 				height: 50,
 			}}
 		>
-			<DashNavbar />
+			<DataActivity />
 		</div>
 	);
 }
