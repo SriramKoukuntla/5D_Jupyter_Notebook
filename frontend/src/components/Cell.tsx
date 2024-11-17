@@ -10,9 +10,32 @@ const Cell = () => {
     try {
       // Use eval for simplicity; replace with a safer execution method in a real app
       const result = eval(code);
-      setOutput(result?.toString() || "No output");
+      setOutput(result?.toString() || "No output");      
     } catch (error) {
       setOutput(`Error: ${error.message}`);
+    }
+  };
+
+  // Handle Tab key for indentation
+  const handleKeyDown = (e) => {
+    if (e.key === "Tab") {
+      e.preventDefault();
+
+      // Get current cursor position and textarea value
+      const { selectionStart, selectionEnd } = e.target;
+      const value = code;
+
+      // Insert a tab character
+      const updatedCode =
+        value.substring(0, selectionStart) +
+        "\t" +
+        value.substring(selectionEnd);
+
+      // Update code and maintain cursor position
+      setCode(updatedCode);
+      setTimeout(() => {
+        e.target.selectionStart = e.target.selectionEnd = selectionStart + 1;
+      }, 0);
     }
   };
 
@@ -24,6 +47,7 @@ const Cell = () => {
         placeholder="Type your code here..."
         value={code}
         onChange={(e) => setCode(e.target.value)}
+        onKeyDown={handleKeyDown} // Attach the keydown handler
       />
 
       {/* Execute Button */}
