@@ -1,11 +1,12 @@
+
+import { useNavigate } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import ProjectGallery from "./ProjectGallery";
-import "bootstrap/dist/css/bootstrap.min.css";
 
 interface Project {
-	id: number;
-	title: string;
-	description: string;
+  id: number;
+  title: string;
+  description: string;
 }
 
 const ProjectDashboard: React.FC = () => {
@@ -27,29 +28,21 @@ const ProjectDashboard: React.FC = () => {
 
 		getProjects();
 	}, []);
+  const navigate = useNavigate();
 
-	const handleAddProject = () => {
-		// Implement the logic to add a new project
-		console.log("Add New Project Clicked");
-	};
+  const handleProjectClick = (projectId: number) => {
+    navigate(`/dataActivity/${projectId}`);
+  };
 
-	return (
-		<div className="container mt-4">
-			<h1
-				style={{
-					marginTop: "25px",
-					marginBottom: "10px",
-					color: "white",
-				}}
-			>
-				Projects
-			</h1>
-			<ProjectGallery
-				projects={projects}
-				onAddProject={handleAddProject}
-			/>
-		</div>
-	);
+  return (
+    <div className="container mt-4">
+      <h1>Projects</h1>
+      <ProjectGallery
+        projects={projects}
+        onProjectClick={handleProjectClick} // Navigate to DataActivity
+      />
+    </div>
+  );
 };
 
 export default ProjectDashboard;

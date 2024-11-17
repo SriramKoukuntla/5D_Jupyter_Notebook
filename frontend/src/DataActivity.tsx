@@ -31,5 +31,4 @@ function DataActivity({ id: string }: any) {
 		</div>
 	);
 }
-
 export default DataActivity;
