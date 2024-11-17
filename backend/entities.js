@@ -25,35 +25,18 @@ async function createKernelWS() {
 
 	return new Promise((resolve, reject) => {
 		if (kerWS) {
-			kerWS.on("open", () => {
+			kerWS.on("open", async () => {
 				console.log("WebSocket connection to kernel opened.");
-				resolve({ kernelId, kerWS }); // Resolve once the connection opens
+				return resolve({ kernelId, kerWS }); // Resolve once the connection opens
 			});
 
 			kerWS.on("error", (error) => {
 				console.error("WebSocket error:", error.message);
-				reject(error);
-			});
-
-			kerWS.on("message", (data) => {
-				const message = JSON.parse(data);
-				if (message.msg_type === "execute_result") {
-					console.log("Result:", message.content.data["text/plain"]);
-				}
-
-				// Handle stream outputs for print() statements
-				if (message.msg_type === "stream") {
-					console.log("Output:", message.content.text);
-				}
-
-				// Handle errors
-				if (message.msg_type === "error") {
-					console.error("Error:", message.content.evalue);
-				}
+				return reject(error);
 			});
 
 			kerWS.on("close", () => {
-				console.log("WebSocket connection to kernel closed.");
+				return resolve("WebSocket connection to kernel closed.");
 			});
 		}
 	});

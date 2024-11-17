@@ -6,7 +6,6 @@ async function run() {
 	try {
 		const app = express();
 		app.use(express.json());
-		app.use();
 		app.use("/api", routes);
 
 		createKernelAndWS();
