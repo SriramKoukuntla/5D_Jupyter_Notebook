@@ -20,47 +20,22 @@ function saveCache(cache) {
     fs.writeFileSync(cacheFile, JSON.stringify(cache, null, 2), "utf8");
 }
 
-// Function to load and parse the Jupyter notebook
-function loadNotebook(notebookPath) {
-    const notebook = fs.readFileSync(notebookPath, "utf8");
-    return JSON.parse(notebook);
-}
-
-// Function to extract content
-function extractNotebookContent(notebook) {
-    const codeCells = [];
-    const markdownCells = [];
-    notebook.cells.forEach((cell) => {
-        if (cell.cell_type === "code") {
-            codeCells.push(cell.source.join(""));
-        } else if (cell.cell_type === "markdown") {
-            markdownCells.push(cell.source.join(""));
-        }
-    });
-    return { codeCells, markdownCells };
-}
-
 // Format prompt for SambaNova's LLM
-function formatPrompt(codeCells, markdownCells) {
+function formatCodePrompt(code) {
     return `
-        You are a helpful assistant. Analyze and summarize the following Jupyter Notebook:
+        You are a helpful assistant. Analyze the following code and describe its purpose and functionality in simple terms:
 
-        ### Markdown Content (Descriptive Text):
-        ${markdownCells.join("\n")}
+        ### Code:
+        ${code}
 
-        ### Code Content (Python Code):
-        ${codeCells.join("\n")}
-
-        Summarize what this notebook represents and describe the meaning of the code in a maximum of 3 sentences.
+        Provide a brief explanation in a maximum of 2 sentences.
     `;
 }
 
-// Summarize notebook
-async function summarizeNotebook(notebookPath) {
+// Explain code
+async function explainCode(code) {
     const cache = loadCache();
-    const notebook = loadNotebook(notebookPath);
-    const { codeCells, markdownCells } = extractNotebookContent(notebook);
-    const prompt = formatPrompt(codeCells, markdownCells);
+    const prompt = formatCodePrompt(code);
     if (cache[prompt]) {
         return cache[prompt];
     }
@@ -86,7 +61,7 @@ async function summarizeNotebook(notebookPath) {
         );
 
         const result = response.data.choices[0].message.content;
-        // Cache the results
+        // Cache the result
         cache[prompt] = result;
         saveCache(cache);
 
@@ -97,17 +72,17 @@ async function summarizeNotebook(notebookPath) {
 }
 
 // Define routes
-// Route to summarize a notebook
-router.post("/summarize", async (req, res) => {
-    const { notebookPath } = req.body;
-    if (!notebookPath || !fs.existsSync(notebookPath)) {
-        return res.status(400).json({ error: "Invalid or missing notebook path." });
+// Route to explain a code cell
+router.post("/explain", async (req, res) => {
+    const { cell } = req.body;
+    if (!cell || typeof cell !== "string") {
+        return res.status(400).json({ error: "Invalid or missing code cell input." });
     }
     try {
-        const summary = await summarizeNotebook(notebookPath);
-        res.json({ summary });
+        const explanation = await explainCode(cell);
+        res.json({ explanation });
     } catch (err) {
-        res.status(500).json({ error: "Failed to summarize notebook.", details: err.message });
+        res.status(500).json({ error: "Failed to explain code.", details: err.message });
     }
 });
 
