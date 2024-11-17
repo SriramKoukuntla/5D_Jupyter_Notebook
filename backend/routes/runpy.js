@@ -35,7 +35,7 @@ router.post("/", async (req, res) => {
 			},
 		};
 
-		const output = await sendMessage(ws, message);
+		const result = await sendMessage(ws, message);
 		// Send a JSON response with the output
 
 		// const base64Image = output; // Base64 string
@@ -52,7 +52,11 @@ router.post("/", async (req, res) => {
 		// // 		console.log(`Image saved successfully as ${outputFileName}`);
 		// // 	}
 		// // });
-		res.json({ output });
+		console.log(result);
+		res.json({
+			output: result,
+			image: result.hasOwnProperty("image") ? result.image : false,
+		});
 	} catch (error) {
 		res.status(500).json(error);
 	}
@@ -84,7 +88,10 @@ async function sendMessage(kerWS, message) {
 
 					if (mimeBundle["image/png"]) {
 						const base64Image = mimeBundle["image/png"];
-						resolve(base64Image);
+						resolve({
+							output: base64Image,
+							image: true,
+						});
 					}
 				} else if (response.msg_type === "stream") {
 					// Handle stream outputs (e.g., print statements)

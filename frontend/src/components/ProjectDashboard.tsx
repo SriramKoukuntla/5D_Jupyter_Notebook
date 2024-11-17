@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+
 import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import ProjectGallery from "./ProjectGallery";
 
 interface Project {
@@ -9,22 +10,24 @@ interface Project {
 }
 
 const ProjectDashboard: React.FC = () => {
-  const [projects, setProjects] = useState<Project[]>([
-    {
-      id: 0,
-      title: "Project Alpha",
-      description:
-        "An amazing project that involves creating something spectacular.",
-    },
-    {
-      id: 1,
-      title: "Project Beta",
-      description:
-        "Another fantastic project that aims to revolutionize technology.",
-    },
-    // Add more projects as needed
-  ]);
+	const [projects, setProjects] = useState([]);
+	useEffect(() => {
+		const getProjects = async () => {
+			const projects = await fetch("http://localhost:8080/api/project/");
+			const data = await projects.json();
+			setProjects(
+				data.data.map((project: any) => {
+					return {
+						id: project.id,
+						title: project.name,
+						description: project.desc,
+					};
+				})
+			);
+		};
 
+		getProjects();
+	}, []);
   const navigate = useNavigate();
 
   const handleProjectClick = (projectId: number) => {

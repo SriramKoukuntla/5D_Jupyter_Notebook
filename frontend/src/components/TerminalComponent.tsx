@@ -8,6 +8,7 @@ const TerminalComponent: React.FC = () => {
 	const terminalRef = useRef<HTMLDivElement | null>(null);
 	const term = useRef<Terminal | null>(null);
 	const fitAddon = useRef<FitAddon | null>(null);
+	const inputBuffer = useRef<string>("");
 
 	useEffect(() => {
 		// Initialize xterm and add-ons
@@ -45,27 +46,57 @@ const TerminalComponent: React.FC = () => {
 	}, []);
 
 	useEffect(() => {
-		if (term.current) {
-			term.current.writeln("Welcome to xterm.js terminal!");
-			const prompt = () => {
-				term.current?.write("\r\n$ ");
-			};
+		const handleChange = async () => {
+			if (term.current) {
+				term.current.writeln("Welcome to xterm.js terminal!");
+				const prompt = () => {
+					term.current?.write("\r\n$ ");
+				};
 
-			prompt();
+				prompt();
 
-			term.current.onKey(({ key, domEvent }) => {
-				if (!term.current) return;
+				term.current.onKey(async ({ key, domEvent }) => {
+					if (!term.current) return;
 
-				if (domEvent.key === "Enter") {
-					term.current.write("\r\nCommand executed!");
-					prompt();
-				} else if (domEvent.key === "Backspace") {
-					term.current.write("\b \b");
-				} else {
-					term.current.write(key);
-				}
-			});
-		}
+					if (domEvent.key === "Enter") {
+						// Print the current input buffer
+						console.log("!" + inputBuffer.current);
+						const res = await fetch(
+							"http://localhost:8080/api/runpy",
+							{
+								method: "POST",
+								headers: {
+									"Content-Type": "application/json", // Indicating that you're sending JSON
+								},
+								body: JSON.stringify({
+									code: "!" + inputBuffer.current,
+								}),
+							}
+						);
+
+						const data = await res.json();
+						term.current.write("\n" + data.output);
+						// Clear the input buffer and show a new prompt
+						console.log(data);
+						inputBuffer.current = "";
+						prompt();
+					} else if (domEvent.key === "Backspace") {
+						if (inputBuffer.current.length > 0) {
+							inputBuffer.current = inputBuffer.current.slice(
+								0,
+								-1
+							);
+							// Remove the last character visually
+							term.current.write("\b \b");
+						}
+					} else {
+						term.current.write(key);
+						inputBuffer.current += key;
+					}
+				});
+			}
+		};
+		handleChange();
 	}, []);
 
 	return (
@@ -73,7 +104,7 @@ const TerminalComponent: React.FC = () => {
 			ref={terminalRef}
 			style={{
 				width: "100%",
-				height: "55%",
+				height: "80%",
 				backgroundColor: "#1e1e1e",
 				justifyContent: "left",
 			}}
