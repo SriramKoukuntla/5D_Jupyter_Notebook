@@ -9,23 +9,24 @@ interface Project {
 }
 
 const ProjectDashboard: React.FC = () => {
-	useEffect(() => {});
+	const [projects, setProjects] = useState([]);
+	useEffect(() => {
+		const getProjects = async () => {
+			const projects = await fetch("http://localhost:8080/api/project/");
+			const data = await projects.json();
+			setProjects(
+				data.data.map((project: any) => {
+					return {
+						id: project.id,
+						title: project.name,
+						description: project.desc,
+					};
+				})
+			);
+		};
 
-	const [projects, setProjects] = useState<Project[]>([
-		{
-			id: 0,
-			title: "Project Alpha",
-			description:
-				"An amazing project that involves creating something spectacular. This project focuses on building an innovative solution to common problems faced in the industry. It includes a comprehensive analysis of the current market trends and proposes a novel approach.",
-		},
-		{
-			id: 1,
-			title: "Project Beta",
-			description:
-				"Another fantastic project that aims to revolutionize the way we think about technology. It delves deep into advanced concepts and provides practical implementations. The project spans multiple domains and integrates various technologies seamlessly.",
-		},
-		// Add more projects as needed
-	]);
+		getProjects();
+	}, []);
 
 	const handleAddProject = () => {
 		// Implement the logic to add a new project

@@ -14,16 +14,15 @@ interface treeData {
 	};
 }
 
-const [treeData, setTreeData] = useState<treeData[]>([]);
-
 const TreeGraph = ({ inputData }: { inputData: treeData[] }) => {
+	const [treeData, setTreeData] = useState<treeData[]>([]);
 	useEffect(() => {
 		if (inputData) {
 			setTreeData(inputData);
 		}
 	});
 
-	return <Tree data={treeData} />;
+	return treeData.length != 0 ? <Tree data={treeData} /> : null;
 };
 
 export default TreeGraph;
