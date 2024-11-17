@@ -1,0 +1,67 @@
+/* Font Import */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap");
+
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Main Application Container */
+.main-app-container {
+    background-color: #000000;
+    color: #ffffff;
+    font-family: "Poppins", sans-serif;
+    text-align: center;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Header Styling */
+.main-app-header h1 {
+    font-size: 3rem;
+    margin-bottom: 10px;
+    color: #ff8c00;
+    /* Orange Accent */
+}
+
+.main-app-header p {
+    font-size: 1.25rem;
+    margin-bottom: 30px;
+    color: #dcdcdc;
+    /* Light Grey */
+}
+
+/* Button Container */
+.main-app-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Button Styling */
+.main-app-button {
+    padding: 12px 30px;
+    background-color: #ff8c00;
+    /* Orange */
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+}
+
+.main-app-button:hover {
+    background-color: #b35c00;
+    /* Darker Orange */
+}
+
+.main-app-button:active {
+    transform: scale(0.95);
+}

@@ -1,13 +1,17 @@
 import React from "react";
-import { LogoutButton } from "./Auth"; // Import the LogoutButton from Auth.js
+import { LogoutButton } from "./Auth"; // Import LogoutButton from Auth.js
+import "./mainApplication.css"; // Import the CSS for styling
 
-const MainApplication = () => {
+export const MainApplication = () => {
   return (
-    <div style={{ textAlign: "center", marginTop: "50px" }}>
-      <h1>Main Application</h1>
-      <p>Welcome to the Main Application!</p>
-      {/* Add Logout Button */}
-      <LogoutButton />
+    <div className="main-app-container">
+      <div className="main-app-header">
+        <h1>Main Application</h1>
+        <p>Welcome to the Main Application!</p>
+      </div>
+      <div className="main-app-actions">
+        <LogoutButton className="main-app-button" />
+      </div>
     </div>
   );
 };
