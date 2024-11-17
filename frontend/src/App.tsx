@@ -1,25 +1,20 @@
-import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { useAuth0 } from "@auth0/auth0-react";
-import Login from "./components/Login";
-import { Dashboard } from "./components/Dashboard";
-import { MainApplication } from "./components/MainApplication";
+import "./App.css";
+import DashNavbar from "./components/Navbar";
 
-const App = () => {
-  const { isAuthenticated } = useAuth0();
-
-  return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Login />} />
-        <Route
-          path="/dashboard"
-          element={isAuthenticated ? <Dashboard /> : <Login />}
-        />
-        <Route path="/main" element={<MainApplication />} />
-      </Routes>
-    </Router>
-  );
-};
+function App() {
+	return (
+		<div
+			style={{
+				width: "100vw",
+				position: "absolute",
+				top: 0,
+				left: 0,
+				height: 50,
+			}}
+		>
+			<DashNavbar />
+		</div>
+	);
+}
 
 export default App;
