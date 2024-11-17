@@ -73,7 +73,7 @@ const TerminalComponent: React.FC = () => {
 			ref={terminalRef}
 			style={{
 				width: "100%",
-				height: "55%",
+				height: "80%",
 				backgroundColor: "#1e1e1e",
 				justifyContent: "left",
 			}}
