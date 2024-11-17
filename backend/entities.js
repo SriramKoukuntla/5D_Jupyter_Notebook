@@ -2,7 +2,7 @@ import WebSocket from "ws";
 import axios from "axios";
 
 const JUPYTER_URL = "http://127.0.0.1:8888";
-const TOKEN = "2777b8ba5771daf8d93b9f8ebf062c0da843ceccae665a68";
+const TOKEN = "f29adc571c49445f78088c6ef9a2dcddeafd808daba89c69";
 
 let kernelId = null;
 let kerWS = null;
@@ -110,7 +110,7 @@ async function createTerminalWS() {
 	}
 }
 
-export async function createKernelAndWebSocket() {
+export async function createKernelAndTerminal() {
 	await createKernel();
 	await createKernelWS();
 	await createTerminal();
