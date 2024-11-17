@@ -1,0 +1,18 @@
+/* Ensure the navbar stretches across the full width */
+.custom-navbar {
+	width: 100%;
+	background-color: black; /* Optional: background color */
+	padding: 0.5rem 1rem;
+}
+
+/* Target the Navbar.Brand and align it to the left */
+.custom-navbar .navbar-brand {
+	margin-left: 0; /* Remove any default margin */
+	padding-left: 0; /* Ensure it's flush against the container */
+	color: white; /* Optional: Set text color for visibility */
+}
+
+/* Optional: Style the Nav to ensure alignment */
+.custom-navbar .nav {
+	justify-content: start; /* Align content to the start (left) */
+}

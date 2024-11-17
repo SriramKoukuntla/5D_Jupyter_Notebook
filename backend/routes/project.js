@@ -139,4 +139,48 @@ router.delete("/deleteProject/:id", async (req, res) => {
 	}
 });
 
+router.get("/getProject/:id", async (req, res) => {
+	try {
+		const supabase = getDatabaseConnection();
+		const id = req.params.id;
+		if (!id) {
+			throw new Error("No id provided!");
+		}
+
+		const { data, error } = await supabase
+			.from("projects") // Replace with your table name
+			.select("*") // You can adjust which fields to select (e.g., 'name', 'description')
+			.eq("id", id) // Filters by the 'id' column
+			.single(); // Ensures you only get one row
+		if (!data) {
+			throw new Error(error);
+		}
+		return res.status(200).json({
+			message: "Project found",
+			data,
+		});
+	} catch (error) {
+		res.status(500).json(error);
+	}
+});
+
+router.get("/", async (req, res) => {
+	try {
+		const supabase = getDatabaseConnection();
+
+		const { data, error } = await supabase
+			.from("projects") // Replace with your table name
+			.select("*"); // You can adjust which fields to select (e.g., 'name', 'description')
+		if (!data) {
+			throw new Error(error);
+		}
+		return res.status(200).json({
+			message: "Project found",
+			data,
+		});
+	} catch (error) {
+		res.status(500).json(error);
+	}
+});
+
 export default router;
