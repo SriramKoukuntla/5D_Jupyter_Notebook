@@ -1,6 +1,6 @@
 import express from "express";
 import routes from "./routes/routes.js";
-import { createKernelAndWS } from "./entities.js";
+import { startServer } from "./entities.js";
 
 async function run() {
 	try {
@@ -8,7 +8,7 @@ async function run() {
 		app.use(express.json());
 		app.use("/api", routes);
 
-		createKernelAndWS();
+		startServer();
 		const port = 8080;
 		app.listen(port, () => {
 			console.log(`Server started at ${port}`);
