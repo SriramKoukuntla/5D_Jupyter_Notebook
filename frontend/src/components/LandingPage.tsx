@@ -12,7 +12,7 @@ const LandingPage: React.FC = () => {
   const [isParagraphVisible4, setIsParagraphVisible4] = useState(false);
 
   const handleCreateAccountClick = () => {
-    navigate("/login");
+    navigate("/dashboard");
   };
 
   const toggleParagraphVisibility = (index: number) => {
@@ -43,7 +43,7 @@ const LandingPage: React.FC = () => {
             href="#signin"
             onClick={(e) => {
               e.preventDefault(); // Prevent the default link behavior
-              navigate("/login"); // Navigate to the login page
+              navigate("/dashboard"); // Navigate to the login page
             }}
           >
             Sign in

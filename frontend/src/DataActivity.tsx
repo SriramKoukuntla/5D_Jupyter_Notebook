@@ -2,8 +2,10 @@ import "./DataActivity.css";
 import TerminalComponent from "./components/TerminalComponent";
 import Notebook from "./components/Notebook";
 import Tree from "./components/Tree";
+import { useParams } from "react-router-dom";
 
-function DataActivity() {
+const DataActivity: React.FC = () => {
+  const { projectId } = useParams<{ projectId: string }>();
   return (
     <div className="container">
       <div className="notebook">
@@ -18,6 +20,6 @@ function DataActivity() {
       <div className="llm"></div>
     </div>
   );
-}
+};
 
 export default DataActivity;

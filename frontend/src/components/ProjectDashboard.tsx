@@ -1,6 +1,6 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import ProjectGallery from "./ProjectGallery";
-import "bootstrap/dist/css/bootstrap.min.css";
 
 interface Project {
   id: number;
@@ -14,34 +14,30 @@ const ProjectDashboard: React.FC = () => {
       id: 0,
       title: "Project Alpha",
       description:
-        "An amazing project that involves creating something spectacular. This project focuses on building an innovative solution to common problems faced in the industry. It includes a comprehensive analysis of the current market trends and proposes a novel approach.",
+        "An amazing project that involves creating something spectacular.",
     },
     {
       id: 1,
       title: "Project Beta",
       description:
-        "Another fantastic project that aims to revolutionize the way we think about technology. It delves deep into advanced concepts and provides practical implementations. The project spans multiple domains and integrates various technologies seamlessly.",
+        "Another fantastic project that aims to revolutionize technology.",
     },
     // Add more projects as needed
   ]);
 
-  const handleAddProject = () => {
-    // Implement the logic to add a new project
-    console.log("Add New Project Clicked");
+  const navigate = useNavigate();
+
+  const handleProjectClick = (projectId: number) => {
+    navigate(`/dataActivity/${projectId}`);
   };
 
   return (
     <div className="container mt-4">
-      <h1
-        style={{
-          marginTop: "25px",
-          marginBottom: "10px",
-          color: "white",
-        }}
-      >
-        Projects
-      </h1>
-      <ProjectGallery projects={projects} onAddProject={handleAddProject} />
+      <h1>Projects</h1>
+      <ProjectGallery
+        projects={projects}
+        onProjectClick={handleProjectClick} // Navigate to DataActivity
+      />
     </div>
   );
 };
