@@ -11,5 +11,3 @@ const MainApplication = () => {
     </div>
   );
 };
-
-export default MainApplication;
