@@ -2,12 +2,10 @@ import WebSocket from "ws";
 import axios from "axios";
 
 const JUPYTER_URL = "http://127.0.0.1:8888";
-const TOKEN = "3cd158fbf13a8d3520db8381f7d22852d9c11aec750d6bc0";
+const TOKEN = "7a9f1acc7ee40ec044822595fa9eddb566ace21992335448";
 
 let kernelId = null;
 let kerWS = null;
-let termId = null;
-let termWS = null;
 
 async function createKernel() {
 	const kernelResponse = await axios.post(
@@ -61,60 +59,9 @@ async function createKernelWS() {
 	});
 }
 
-async function createTerminal() {
-	try {
-		const response = await axios.post(
-			`${JUPYTER_URL}/api/terminals?token=${TOKEN}`
-		);
-		termId = response.data.name; // Terminal ID
-		console.log(`Terminal created with ID: ${termId}`);
-	} catch (error) {
-		console.error(
-			"Error creating terminal:",
-			error.response ? error.response.data : error.message
-		);
-		throw error;
-	}
-}
-
-async function createTerminalWS() {
-	try {
-		const wsUrl = `${JUPYTER_URL.replace(
-			"http",
-			"ws"
-		)}/terminals/websocket/${termId}?token=${TOKEN}`;
-		termWS = new WebSocket(wsUrl);
-
-		return new Promise((resolve, reject) => {
-			termWS.on("open", () => {
-				console.log("WebSocket connection to terminal opened.");
-				resolve(termWS);
-			});
-
-			termWS.on("message", (data) => {
-				console.log("Terminal output:", data.toString());
-			});
-
-			termWS.on("error", (error) => {
-				console.error("WebSocket error:", error.message);
-				reject(error);
-			});
-
-			termWS.on("close", () => {
-				console.log("WebSocket connection to terminal closed.");
-			});
-		});
-	} catch (error) {
-		console.error("Error connecting to terminal WebSocket:", error.message);
-		throw error;
-	}
-}
-
-export async function createKernelAndTerminal() {
+export async function createKernelAndWS() {
 	await createKernel();
 	await createKernelWS();
-	await createTerminal();
-	await createTerminalWS();
 }
 
 export function getKernelId() {
@@ -123,12 +70,4 @@ export function getKernelId() {
 
 export function getKernelWS() {
 	return kerWS;
-}
-
-export function getTerminalId() {
-	return termId;
-}
-
-export function getTerminalWS() {
-	return termWS;
 }
