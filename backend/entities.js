@@ -9,7 +9,7 @@ let supabase = null;
 
 async function createKernel() {
 	const kernelResponse = await axios.post(
-		`${JUPYTER_URL}/api/kernels?token=${TOKEN}`,
+		`${process.env.JUPYTER_URL}/api/kernels?token=${process.env.TOKEN}`,
 		{ name: "python3" }
 	);
 	kernelId = kernelResponse.data.id;
@@ -17,10 +17,10 @@ async function createKernel() {
 }
 
 async function createKernelWS() {
-	const wsUrl = `${JUPYTER_URL.replace(
+	const wsUrl = `${process.env.JUPYTER_URL.replace(
 		"http",
 		"ws"
-	)}/api/kernels/${kernelId}/channels?token=${TOKEN}`;
+	)}/api/kernels/${kernelId}/channels?token=${process.env.TOKEN}`;
 	kerWS = new WebSocket(wsUrl);
 
 	return new Promise((resolve, reject) => {
@@ -62,8 +62,8 @@ async function createKernelAndWS() {
 
 export async function startServer() {
 	dotenv.config();
-	createKernelAndWS();
-	startDatabase();
+	await createKernelAndWS();
+	await startDatabase();
 }
 
 export function getKernelId() {
