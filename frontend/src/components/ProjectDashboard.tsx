@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ProjectGallery from "./ProjectGallery";
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -9,6 +9,8 @@ interface Project {
 }
 
 const ProjectDashboard: React.FC = () => {
+	useEffect(() => {});
+
 	const [projects, setProjects] = useState<Project[]>([
 		{
 			id: 0,

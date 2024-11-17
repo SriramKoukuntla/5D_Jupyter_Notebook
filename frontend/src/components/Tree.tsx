@@ -1,24 +1,29 @@
-import React from 'react';
-import Tree from 'react-d3-tree';
+import { useEffect, useState } from "react";
+import Tree from "react-d3-tree";
 
-const treeData = [
-  {
-    name: 'Root',
-    children: [
-      {
-        name: 'Child 1',
-        children: [
-          { name: 'Grandchild 1' },
-          { name: 'Grandchild 2' },
-        ],
-      },
-      { name: 'Child 2' },
-    ],
-  },
-];
+interface treeData {
+	name: string;
+	children: treeData[];
+	attributes: {
+		code: string;
+		output: string;
+		images: string;
+		desc: string;
+		stage: "Pre-Processing" | "Visualization" | "Modeling";
+		parent: string;
+	};
+}
 
-const TreeGraph = () => {
-  return <Tree data={treeData} />;
+const [treeData, setTreeData] = useState<treeData[]>([]);
+
+const TreeGraph = ({ inputData }: { inputData: treeData[] }) => {
+	useEffect(() => {
+		if (inputData) {
+			setTreeData(inputData);
+		}
+	});
+
+	return <Tree data={treeData} />;
 };
 
 export default TreeGraph;
