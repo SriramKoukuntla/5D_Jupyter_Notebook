@@ -1,7 +1,10 @@
 import React from "react";
+import { useAuth0 } from "@auth0/auth0-react";
 import "./App.css"; // Custom CSS for additional styling
 
 function Login() {
+  const { loginWithRedirect } = useAuth0();
+
   return (
     <div className="login-page">
       <div className="login-container">
@@ -14,30 +17,17 @@ function Login() {
             /> */}
           </div>
           <div className="form-group">
-            <input
-              type="text"
-              placeholder="Username or E-mail"
-              className="form-input"
-            />
+            <h1>Welcome to the App</h1>
           </div>
           <div className="form-group">
-            <input
-              type="password"
-              placeholder="Password"
-              className="form-input"
-            />
+            <button
+              type="button"
+              className="sign-in-btn"
+              onClick={() => loginWithRedirect()}
+            >
+              Log In
+            </button>
           </div>
-          <div className="captcha-section">
-            <p className="success-text">✔ Success!</p>
-            <img
-              src="https://via.placeholder.com/100" // Replace with Cloudflare logo or captcha image
-              alt="Captcha"
-              className="captcha-image"
-            />
-          </div>
-          <button type="submit" className="sign-in-btn">
-            Sign In
-          </button>
           <div className="links-container">
             <a href="/forgot-password" className="link">
               Forgot Password?
@@ -53,7 +43,6 @@ function Login() {
 }
 
 export default Login;
-
 
 // import React, { useState } from "react";
 // import { useNavigate } from "react-router-dom";
