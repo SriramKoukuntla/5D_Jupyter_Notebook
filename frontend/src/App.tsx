@@ -16,7 +16,7 @@ const App = () => {
           path="/dashboard"
           element={isAuthenticated ? <Dashboard /> : <Login />}
         />
-        <Route path="/main" element={<MainApplication />} />
+        <Route path="/main-application" element={<MainApplication />} />
       </Routes>
     </Router>
   );
