@@ -1,17 +1,13 @@
-import WebSocket from "ws";
-import axios from "axios";
 import {
 	createKernelAndTerminal,
-	getKernelId,
 	getKernelWS,
-	getTerminalId,
 	getTerminalWS,
 } from "./entities.js";
 
 // Function to execute code in the kernel
 function executeCodeInKernel(code) {
 	const ws = getKernelWS();
-	if (!ws || ws.readyState !== WebSocket.OPEN) {
+	if (!ws || ws.readyState !== 1) {
 		console.error(
 			"WebSocket is not open. Please create the kernel and WebSocket first."
 		);
@@ -37,10 +33,10 @@ function executeCodeInKernel(code) {
 	ws.send(JSON.stringify(message));
 }
 
-const dependency = async () => {
+const dependency = async (command) => {
 	const termWS = getTerminalWS();
 
-	if (!termWS || termWS.readyState !== WebSocket.OPEN) {
+	if (!termWS || termWS.readyState !== 1) {
 		console.error(
 			"Terminal WebSocket is not open. Please create it first."
 		);
@@ -48,8 +44,8 @@ const dependency = async () => {
 	}
 
 	// Command to install the dependency
-	const installCommand = `pip install pandas\n`;
-	termWS.send(installCommand);
+	const installCommand = command;
+	termWS.send(JSON.stringify(installCommand));
 };
 // Example usage
 const code = async () => {
@@ -77,5 +73,5 @@ const code = async () => {
 };
 
 await createKernelAndTerminal();
-dependency();
-code();
+await dependency("pip install pandas\n");
+await code();

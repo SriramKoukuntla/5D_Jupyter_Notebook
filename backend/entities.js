@@ -2,7 +2,7 @@ import WebSocket from "ws";
 import axios from "axios";
 
 const JUPYTER_URL = "http://127.0.0.1:8888";
-const TOKEN = "f29adc571c49445f78088c6ef9a2dcddeafd808daba89c69";
+const TOKEN = "3cd158fbf13a8d3520db8381f7d22852d9c11aec750d6bc0";
 
 let kernelId = null;
 let kerWS = null;
@@ -28,7 +28,7 @@ async function createKernelWS() {
 	return new Promise((resolve, reject) => {
 		if (kerWS) {
 			kerWS.on("open", () => {
-				console.log("WebSocket connection opened.");
+				console.log("WebSocket connection to kernel opened.");
 				resolve({ kernelId, kerWS }); // Resolve once the connection opens
 			});
 
@@ -55,7 +55,7 @@ async function createKernelWS() {
 			});
 
 			kerWS.on("close", () => {
-				console.log("WebSocket connection closed.");
+				console.log("WebSocket connection to kernel closed.");
 			});
 		}
 	});
