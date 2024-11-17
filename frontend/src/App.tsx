@@ -1,16 +1,19 @@
 import "./App.css";
-import  TerminalComponent  from "./components/TerminalComponent";
-import Notebook from "./components/Notebook";
-import Tree from "./components/Tree";
+import DashNavbar from "./components/Navbar";
 
 function App() {
 	return (
-    <div className = "container">
-      <div className = "notebook"><Notebook/></div>
-      <div className = "terminal"><TerminalComponent/></div>
-      <div className = "branch"><Tree/></div>
-      <div className = "llm"></div>
-    </div>
+		<div
+			style={{
+				width: "100vw",
+				position: "absolute",
+				top: 0,
+				left: 0,
+				height: 50,
+			}}
+		>
+			<DashNavbar />
+		</div>
 	);
 }
 

@@ -1,0 +1,76 @@
+/* General Card Styling */
+.project-card {
+	border: none;
+	background-color: #1e1e1e; /* Dark background */
+}
+
+/* Title Styling with Orange Accent */
+.project-title {
+	color: #ff8c00; /* Orange color */
+}
+
+/* Description Text Styling */
+.project-description {
+	color: #dcdcdc; /* Light gray color */
+}
+
+/* Add New Project Card Styling */
+.add-project-card {
+	border: 2px dashed #ff8c00; /* Orange dashed border */
+	cursor: pointer;
+	transition: background-color 0.3s;
+}
+
+.add-project-card:hover {
+	background-color: #2a2a2a;
+}
+
+.add-button {
+	font-size: 2rem;
+	color: #ff8c00;
+	margin-top: 1rem;
+}
+
+/* Modal Custom Styling */
+.modal-header-custom,
+.modal-footer-custom {
+	background-color: #1e1e1e;
+	border: none;
+}
+
+.modal-body-custom {
+	background-color: #1e1e1e;
+}
+
+.form-label-custom {
+	color: #ff8c00;
+}
+
+.form-control-custom {
+	background-color: #2a2a2a;
+	color: #dcdcdc;
+	border: 1px solid #444;
+}
+
+.form-control-custom::placeholder {
+	color: #888;
+}
+
+.button-custom {
+	background-color: #ff8c00;
+	border: none;
+}
+
+.button-custom:hover {
+	background-color: #e67e00;
+}
+
+/* Body Background for Dark Mode */
+body {
+	background-color: #121212; /* Very dark background */
+	color: #ffffff; /* Default text color */
+}
+
+.custom-bg-dark {
+	background-color: "black";
+}

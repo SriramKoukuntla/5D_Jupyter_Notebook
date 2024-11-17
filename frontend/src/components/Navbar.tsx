@@ -1,22 +1,19 @@
-// import { Navbar, Container } from "react-bootstrap";
+import { Nav, Navbar } from "react-bootstrap";
 
-// import React from 'react'
+import "./css/Navbar.css";
 
-// export const Navbar = () => {
-//   return (
-//     <Navbar className="bg-body-tertiary">
-//         <Container>
-//           <Navbar.Brand href="#home">
-//             <img
-//               alt=""
-//               src="/img/logo.svg"
-//               width="30"
-//               height="30"
-//               className="d-inline-block align-top"
-//             />{' '}
-//             React Bootstrap
-//           </Navbar.Brand>
-//         </Container>
-//       </Navbar>
-//   )
-// }
+const DashNavbar: React.FC<any> = () => {
+	return (
+		<Navbar className="custom-navbar">
+			<div className="navbar-container d-flex">
+				<Nav className="align-items-center">
+					<Navbar.Brand style={{ paddingLeft: "20px" }}>
+						notevis
+					</Navbar.Brand>
+				</Nav>
+			</div>
+		</Navbar>
+	);
+};
+
+export default DashNavbar;
