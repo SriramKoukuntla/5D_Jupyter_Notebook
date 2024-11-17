@@ -31,7 +31,7 @@
   .bottom-left {
     bottom: 0;
     left: 0;
-    background-color: grey;
+    background-color: #333;
   }
   
   /* Bottom-right box */

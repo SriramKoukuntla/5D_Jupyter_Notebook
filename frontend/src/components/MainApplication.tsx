@@ -1,8 +1,10 @@
 import React from "react";
 import "./MainApplication.css"; // Import the CSS file
+import Terminal from "./Terminal/Terminal";
 
 const MainApplication = () => {
   return (
+    // <Terminal></Terminal>
     <div className="container">
       <div className="box top-left">
         <p>Hello</p>
@@ -11,7 +13,7 @@ const MainApplication = () => {
         <p>Hello</p>
       </div>
       <div className="box bottom-left">
-          <p>Hello</p>
+        <Terminal/>
       </div>
       <div className="box bottom-right">
         <p>Hello</p>

@@ -1,3 +1,18 @@
+// import React from 'react';
+// import TerminalComponent from './components/Terminal/Terminal';
+
+// const App = () => {
+//   return (
+//     <div>
+//       <h1>React Xterm.js Terminal</h1>
+//       <TerminalComponent />
+//     </div>
+//   );
+// };
+
+// export default App;
+
+
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from "./components/Login";
