@@ -1,0 +1,43 @@
+/* Container to position all the boxes */
+.container {
+    position: relative;
+    height: 100vh;
+    width: 100vw;
+    margin: 0;
+  }
+  
+  /* Common styles for all boxes */
+  .box {
+    position: absolute;
+    width: 50%;
+    height: 50%;
+  }
+  
+  /* Top-left box */
+  .top-left {
+    top: 0;
+    left: 0;
+    background-color: red;
+  }
+  
+  /* Top-right box */
+  .top-right {
+    top: 0;
+    right: 0;
+    background-color: blue;
+  }
+  
+  /* Bottom-left box */
+  .bottom-left {
+    bottom: 0;
+    left: 0;
+    background-color: grey;
+  }
+  
+  /* Bottom-right box */
+  .bottom-right {
+    bottom: 0;
+    right: 0;
+    background-color: yellow;
+  }
+  
