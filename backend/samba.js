@@ -3,6 +3,21 @@ const axios = require("axios");
 
 // SambaNova API key
 const apiKey = "45da1703-7bd2-4001-aac0-583b0168a35f";
+//cache file
+const cacheFile = "llm_cache.json";
+
+//Load cache or initialize an empty cache
+function loadCache() {
+    if (fs.existsSync(cacheFile)) {
+        return JSON.parse(fs.readFileSync(cacheFile, "utf8"));
+    }
+    return {};
+}
+
+//Save cache to file
+function saveCache(cache) {
+    fs.writeFileSync(cacheFile, JSON.stringify(cache, null, 2), "utf8");
+}
 
 // Function to load and parse the Jupyter notebook
 function loadNotebook(notebookPath) {
@@ -41,9 +56,14 @@ function formatPrompt(codeCells, markdownCells) {
 
 // Function to send the notebook content to SambaNova's LLM
 async function summarizeNotebook(notebookPath) {
+  const cache = loadCache();
   const notebook = loadNotebook(notebookPath);
   const { codeCells, markdownCells } = extractNotebookContent(notebook);
   const prompt = formatPrompt(codeCells, markdownCells);
+  if (cache[prompt]) {
+    console.log("Cache hit! Returning cached response.");
+    return cache[prompt];
+  }
 
   try {
     const response = await axios.post(
@@ -65,7 +85,12 @@ async function summarizeNotebook(notebookPath) {
       }
     );
 
-    return response.data.choices[0].message.content;
+    const result = response.data.choices[0].message.content;
+    // Cache the results
+    cache[prompt] = result;
+    saveCache(cache);
+
+    return result;
   } catch (error) {
     console.error("Error fetching LLM response:", error.response?.data || error.message);
     throw error;
