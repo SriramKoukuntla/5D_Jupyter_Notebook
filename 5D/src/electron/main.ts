@@ -1,6 +1,7 @@
 import {app, BrowserWindow} from "electron";
 import path from 'path';
 import { isDev } from './util.js'
+import { createAppMenu } from './menu.js';
 
 app.on("ready", ()=>{
     const mainWindow = new BrowserWindow({});
@@ -10,4 +11,7 @@ app.on("ready", ()=>{
     else{
         mainWindow.loadFile(path.join(app.getAppPath(), '/dist-react/index.html'))
     }
+
+    createAppMenu(mainWindow);
+
 })
