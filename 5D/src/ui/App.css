@@ -10,15 +10,6 @@ html, body, #root {
   height: 100%;
 }
 
-.fileNavigation {
-  background-color: orange;
-  flex: 1; /* This ensures the panel takes the full space */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%; /* Ensure it stretches vertically */
-}
-
 .react-resizable-panel {
   height: 100%; /* Force the resizable panel to stretch */
 }
@@ -26,13 +17,11 @@ html, body, #root {
 
 .FileExplorer {
   background-color: red;
-
 }
 
 .CodeEditor {
   background-color: blue;
 }
-
 
 .Branching {
   background-color: violet;
