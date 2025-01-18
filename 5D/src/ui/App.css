@@ -24,4 +24,20 @@ html, body, #root {
 }
 
 
+.FileExplorer {
+  background-color: red;
 
+}
+
+.CodeEditor {
+  background-color: blue;
+}
+
+
+.Branching {
+  background-color: violet;
+}
+
+.Terminal {
+  background-color: orange;
+}
