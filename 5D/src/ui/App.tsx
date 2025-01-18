@@ -22,7 +22,7 @@ function App() {
         </p>
       </div>
       <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
+        This is the point where all the boilercode is basically done. I am making a commit here so that I can fork this part if I ever want to make another desktop electron app.
       </p>
     </>
   )
