@@ -1,10 +1,22 @@
-import { Menu, BrowserWindow, shell, app } from 'electron';
+import { Menu, BrowserWindow, shell, app, dialog } from 'electron';
 
 export function createAppMenu(mainWindow: BrowserWindow): void {
     const menuTemplate: Electron.MenuItemConstructorOptions[] = [
         {
             label: "File",
             submenu: [
+                {
+                    label: 'Open Folder',
+                    click: async () => {
+                        const result = await dialog.showOpenDialog(mainWindow, {
+                            properties: ['openDirectory'], // Allow folder selection
+                        });
+                        if (!result.canceled && result.filePaths.length > 0) {
+                            console.log('Selected folder:', result.filePaths[0]);
+                            // Add logic here to handle the selected folder
+                        }
+                    },
+                },
                 {
                     label: 'Exit',
                     click: () => {
